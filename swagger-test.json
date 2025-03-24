@@ -3,7 +3,7 @@
     "swagger": "2.0",
     "info": {
       "title": "R'lyeh",
-      "description": "API Documentation",
+      "description": "API Documentation Test",
       "version": "1.0.0"
     },
     "basePath": "/api/v1",
