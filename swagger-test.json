@@ -1,0 +1,147 @@
+{
+  "swaggerDoc": {
+    "swagger": "2.0",
+    "info": {
+      "title": "R'lyeh",
+      "description": "API Documentation",
+      "version": "1.0.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+      "/token": {
+        "post": {
+          "summary": "Authenticate and get a token",
+          "description": "Returns a token if the credentials are correct",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "credentials",
+              "required": false,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "testy"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "testy"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful authentication",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid credentials"
+            }
+          }
+        }
+      },
+      "/me": {
+        "get": {
+          "summary": "Get authenticated user information",
+          "description": "Returns the full information of the authenticated user",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User data returned successfully"
+            },
+            "401": {
+              "description": "Invalid signature"
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "summary": "Get a list of users",
+          "description": "Returns a list of users with limited fields (ID, username, category)",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User list returned successfully"
+            },
+            "401": {
+              "description": "Invalid signature"
+            }
+          }
+        }
+      },
+      "/alerts": {
+        "get": {
+          "summary": "Get all security alerts along with their status and the affected client",
+          "description": "Returns a list of all security alerts.",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Alerts list returned successfully"
+            },
+            "401": {
+              "description": "Invalid signature"
+            }
+          }
+        }
+      },
+      "/_debug": {
+        "get": {
+          "summary": "Debug endpoint (Access restricted)",
+          "description": "Returns all backend secrets",
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Access granted to moderator"
+            },
+            "401": {
+              "description": "Invalid signature"
+            },
+            "403": {
+              "description": "Access denied. Moderator role required"
+            }
+          }
+        }
+      }
+    },
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Use the token received from /api/v1/token"
+      }
+    }
+  },
+  "customOptions": {}
+}
